@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7f2">
+  <title>Podar Pearl School Library | Circulation desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="scanner.css">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-brand"><div class="brand-mark">P</div><div><strong>Podar Pearl School</strong><span>School library</span></div></div>
+      <p class="eyebrow">Library desk access</p>
+      <h1>Welcome back</h1>
+      <p class="login-copy">Sign in to manage the collection and student loans.</p>
+      <form id="loginForm">
+        <label>Username<input name="username" autocomplete="username" required placeholder="Enter username"></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" required placeholder="Enter password"></label>
+        <p class="login-error" id="loginError">Username or password is incorrect.</p>
+        <button class="primary-button login-button" type="submit">Sign in <span>→</span></button>
+      </form>
+    </div>
+  </section>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand-lockup">
+        <div class="brand-mark">P</div>
+        <div><strong>Podar Pearl School</strong><span>School library</span></div>
+      </div>
+      <div class="school-chip"><span class="status-dot"></span> Library desk <span class="chip-caret">⌄</span></div>
+      <nav class="main-nav">
+        <p class="nav-label">Workspace</p>
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">⌂</span>Overview</button>
+        <button class="nav-item" data-view="collection"><span class="nav-icon">▤</span>Collection <span class="nav-count" id="collectionNavCount">5</span></button>
+        <button class="nav-item" data-view="circulation"><span class="nav-icon">↔</span>Circulation</button>
+        <button class="nav-item" data-view="labels"><span class="nav-icon">⌗</span>QR labels</button>
+        <button class="nav-item" data-view="audit"><span class="nav-icon">▥</span>Audit</button>
+        <p class="nav-label nav-label-spaced">Manage</p>
+        <button class="nav-item" data-view="students"><span class="nav-icon">◎</span>Students</button>
+        <button class="nav-item" data-view="settings"><span class="nav-icon">⚙</span>Settings</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="help-card"><div class="help-icon">?</div><strong>Need a hand?</strong><span>Read the desk guide</span><button class="text-button">Open guide <span>→</span></button></div>
+        <div class="user-row"><div class="avatar">AS</div><div><strong id="appUserName">Shawn</strong><span>Library coordinator</span></div><button class="more-button" aria-label="Account menu">•••</button></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" aria-label="Open menu">☰</button>
+        <div class="breadcrumbs"><span>Podar Pearl School</span><b>/</b><strong id="breadcrumbCurrent">Overview</strong></div>
+        <div class="top-actions">
+          <button class="icon-button" aria-label="Search" id="searchToggle">⌕</button>
+          <button class="icon-button notification-button" aria-label="Notifications" id="notificationButton">♢<span class="notification-dot"></span></button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="view active" id="overviewView">
+          <div class="page-heading">
+            <div><p class="eyebrow">Tuesday, 15 September 2026</p><h1>Good morning, <span id="greetingName">Shawn</span> <span class="wave">✦</span></h1><p class="subheading">Here is what is happening at the library today.</p></div>
+            <button class="primary-button" id="addBookButton"><span>＋</span> Add a book</button>
+          </div>
+          <div class="alert-strip" id="alertStrip"><div class="alert-symbol">!</div><div><strong><span id="alertCount">0</span> books due tomorrow</strong><span>Return reminder for the library desk.</span></div><button class="dismiss-alert" aria-label="Dismiss alert">×</button></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total collection</span><span class="stat-icon green">▤</span></div><strong id="totalBooks">5</strong><div class="stat-foot"><span class="trend up">↗ 8.3%</span> <span>vs last term</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Available now</span><span class="stat-icon blue">✓</span></div><strong id="availableBooks">5</strong><div class="stat-foot"><span class="trend up">↗ 5.1%</span> <span>vs last term</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>On loan</span><span class="stat-icon amber">↗</span></div><strong id="loanedBooks">0</strong><div class="stat-foot"><span class="trend neutral">• 0 due this week</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Overdue</span><span class="stat-icon coral">!</span></div><strong id="overdueBooks">0</strong><div class="stat-foot"><span class="trend down">↘ 0</span> <span>since yesterday</span></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <section class="panel activity-panel"><div class="panel-heading"><div><h2>Recent activity</h2><p>Latest movement around the collection</p></div><button class="quiet-button" data-view-link="circulation">View all <span>→</span></button></div><div class="activity-list" id="activityList"></div></section>
+            <section class="panel due-panel"><div class="panel-heading"><div><h2>Due soon</h2><p>Keep an eye on these returns</p></div><button class="quiet-button" data-view-link="circulation">See calendar <span>→</span></button></div><div class="due-list" id="dueList"></div></section>
+          </div>
+          <section class="panel collection-preview"><div class="panel-heading"><div><h2>Collection snapshot</h2><p>Your most recently added books</p></div><button class="quiet-button" data-view-link="collection">Open collection <span>→</span></button></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Book ID</th><th>Category</th><th>Status</th><th>Added</th><th></th></tr></thead><tbody id="collectionTable"></tbody></table></div></section>
+        </section>
+
+        <section class="view" id="collectionView"><div class="page-heading"><div><p class="eyebrow">Your catalogue</p><h1>Collection</h1><p class="subheading">Every title, identifier, and current location in one place.</p></div><button class="primary-button" id="collectionAddButton"><span>＋</span> Add a book</button></div><div class="toolbar"><div class="search-field"><span>⌕</span><input id="collectionSearch" type="search" placeholder="Search title, author or book ID"></div><div class="filter-pills"><button class="filter-pill active" data-filter="all">All <span id="allFilterCount">5</span></button><button class="filter-pill" data-filter="available">Available</button><button class="filter-pill" data-filter="loaned">On loan</button></div></div><section class="panel collection-panel"><div class="table-wrap"><table><thead><tr><th>Book</th><th>Book ID</th><th>Category</th><th>Status</th><th>Borrower</th><th>Added</th><th></th></tr></thead><tbody id="fullCollectionTable"></tbody></table></div></section></section>
+
+        <section class="view" id="circulationView"><div class="page-heading"><div><p class="eyebrow">Move books in and out</p><h1>Circulation</h1><p class="subheading">Lend a book, record a return, or look up a QR label.</p></div><button class="primary-button" id="circulationScanButton"><span>⌗</span> Scan a QR</button></div><div class="circulation-layout"><section class="panel lookup-panel"><div class="lookup-icon">⌗</div><h2>Find a book</h2><p>Enter a book ID or scan the label on the cover to see its details.</p><div class="lookup-input"><span>⌕</span><input id="lookupInput" placeholder="e.g. BK-001 or scan QR"><button id="lookupButton">Find</button></div><div id="lookupResult" class="lookup-result hidden"></div></section><section class="panel loan-panel"><div class="panel-heading"><div><h2>Active loans</h2><p>Current books with students</p></div><span class="soft-badge" id="activeLoanCount">0 active</span></div><div id="activeLoansList" class="active-loans-list"></div></section></div></section>
+
+        <section class="view" id="labelsView"><div class="page-heading"><div><p class="eyebrow">Print and paste</p><h1>QR labels</h1><p class="subheading">Create a scannable label for every book in the collection.</p></div><button class="primary-button" id="labelsAddButton"><span>＋</span> Add a book</button></div><section class="panel labels-panel"><div class="labels-intro"><div class="label-graphic">⌗</div><div><h2>Book labels</h2><p>Each QR code contains the book ID and opens its record at the circulation desk.</p></div><button class="quiet-button" id="printLabelsButton">Print labels <span>↗</span></button></div><div id="labelsGrid" class="labels-grid"></div></section></section>
+
+        <section class="view" id="auditView"><div class="page-heading"><div><p class="eyebrow">Loan history and accountability</p><h1>Audit</h1><p class="subheading">See who has each book, when it was borrowed, and when it is due.</p></div></div><section class="panel audit-panel"><div class="panel-heading"><div><h2>Student loan register</h2><p>Current lending records for the library desk</p></div><span class="soft-badge" id="auditLoanCount">0 active loans</span></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Student ID</th><th>Book</th><th>Borrowed</th><th>Return due</th><th>Status</th><th></th></tr></thead><tbody id="auditTable"></tbody></table></div></section></section>
+
+        <section class="view" id="studentsView"><div class="page-heading"><div><p class="eyebrow">Borrower directory</p><h1>Students</h1><p class="subheading">A quick view of students currently borrowing from Podar Pearl School.</p></div></div><section class="panel students-panel"><div id="studentsGrid" class="students-grid"></div></section></section>
+        <section class="view" id="settingsView"><div class="page-heading"><div><p class="eyebrow">Workspace preferences</p><h1>Settings</h1><p class="subheading">Keep your library desk configured for the way your school works.</p></div></div><section class="panel settings-panel"><div class="setting-row"><div><strong>Return reminders</strong><span>Show a desk alert one day before a book is due.</span></div><label class="toggle"><input type="checkbox" checked id="reminderToggle"><span></span></label></div><div class="setting-row"><div><strong>Default loan period</strong><span>Applied when creating a new loan.</span></div><select><option>14 days</option><option>7 days</option><option>21 days</option></select></div><div class="setting-row"><div><strong>Library name</strong><span>Shown on printed QR labels.</span></div><input class="setting-input" value="Podar Pearl School Library"></div></section></section>
+      </div>
+    </main>
+  </div>
+
+  <div class="scanner-backdrop hidden" id="scannerModal"><div class="scanner-modal" role="dialog" aria-modal="true" aria-labelledby="scannerTitle"><button class="modal-close" id="closeScanner" aria-label="Close scanner">×</button><p class="eyebrow">Camera circulation</p><h2 id="scannerTitle">Scan a book QR</h2><p class="modal-copy">Allow camera access and hold a QR label inside the frame.</p><div class="scanner-frame"><video id="scannerVideo" autoplay muted playsinline></video><div class="scanner-corners"></div><div class="scanner-loading" id="scannerLoading">Starting camera…</div></div><p class="scanner-status" id="scannerStatus">The camera will only be used to read a book ID.</p><div class="scanner-fallback"><span>Camera unavailable?</span><button class="quiet-button" id="useManualLookup">Enter Book ID instead →</button></div></div></div>
+  <div class="modal-backdrop hidden" id="bookModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="closeModal" aria-label="Close">×</button><p class="eyebrow">New catalogue record</p><h2 id="modalTitle">Add a book</h2><p class="modal-copy">Create a book ID and a QR label ready for printing.</p><form id="bookForm"><label>Book title<input name="title" required placeholder="e.g. The Secret Garden"></label><label>Author<input name="author" required placeholder="e.g. Frances Hodgson Burnett"></label><div class="form-row"><label>Category<select name="category"><option>Fiction</option><option>Science</option><option>History</option><option>Mathematics</option><option>Art & design</option></select></label><label>Year published<input name="year" type="number" min="1000" max="2026" placeholder="2024"></label></div><div class="modal-actions"><button type="button" class="quiet-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button">Create book <span>→</span></button></div></form></div></div>
+  <div class="modal-backdrop hidden" id="loanModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="loanTitle"><button class="modal-close" id="closeLoanModal" aria-label="Close">×</button><p class="eyebrow">Record a loan</p><h2 id="loanTitle">Lend <span id="loanBookTitle"></span></h2><p class="modal-copy">Enter the student and loan dates for this book.</p><form id="loanForm"><label>Student name<input id="loanBorrower" name="borrower" required placeholder="e.g. Maya Patel"></label><label>Student ID<input name="studentId" required placeholder="e.g. PPS-2048"></label><div class="form-row"><label>Borrowed date<input id="loanBorrowed" name="borrowed" required></label><label>Return date<input id="loanDue" name="returnDate" required></label></div><div class="modal-actions"><button type="button" class="quiet-button" id="cancelLoan">Cancel</button><button type="submit" class="primary-button">Confirm loan <span>→</span></button></div></form></div></div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

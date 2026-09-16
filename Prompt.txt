@@ -1,0 +1,23 @@
+I need to create a library management website for a school
+
+I need to generate QR for each book
+QR will be generated for a book details which I enter like book name and author
+
+A QR will be generated and It will be tagged to that book
+
+I will take a print and paste it in the book front page
+
+Once I scan the QR using the website it needs to show the book details and with a option to lend or borrow
+
+Initially if the book is with the library person it needs to show as lend 
+if I press the lend option It needs to ask the Student name and Student Id and borrow date and return date so once I enter the details the book gets mapped to that student 
+
+I need to get a remained message one day before the return date of each book so I can intimate the staudents manually and collect the book
+
+Once the book is received I will scan the QR and it shows rhe details of the book and the student details 
+
+If I press returned then this book needs to be listed in the available in the library website
+
+We can have QR or Book ID to enter for lend and return so if the QR is missing then it will be easy to enter the book ID
+
+Build this and give me in a professional level
