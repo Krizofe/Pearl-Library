@@ -1,4 +1,43 @@
+ .sidebar-close {
+  display: none;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sidebar-close:hover {
+  background: var(--mint);
+  color: var(--green-dark);
+}
+
+.signout-button {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 600 10px 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+
+.signout-button:hover {
+  color: var(--green-dark);
+}
+
 @media (max-width: 720px) {
+  .sidebar-close {
+    display: grid;
+    place-items: center;
+  }
+
   .sidebar.open {
     transform: translateX(0) !important;
   }
