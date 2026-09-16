@@ -42,7 +42,7 @@ function updateStats() {
   $('#totalBooks').textContent = books.length;
   $('#availableBooks').textContent = books.length - loaned;
   $('#loanedBooks').textContent = loaned;
-  $('#overdueBooks').textContent = Math.max(1, books.filter(book => book.status === 'overdue').length);
+  $('#overdueBooks').textContent = books.filter(book => book.status === 'overdue').length;
   $('#collectionNavCount').textContent = books.length;
   $('#allFilterCount').textContent = books.length;
   $('#activeLoanCount').textContent = `${loaned} active`;
@@ -168,6 +168,7 @@ function renderAudit() {
 function navigate(viewName) {
   $$('.nav-item').forEach(button => button.classList.toggle('active', button.dataset.view === viewName));
   $$('.view').forEach(view => view.classList.toggle('active', view.id === `${viewName}View`));
+  if (window.innerWidth <= 720) { const sidebar = $('.sidebar'); sidebar.classList.remove('open'); sidebar.style.setProperty('transform', 'translateX(-100%)', 'important'); }
   $('#breadcrumbCurrent').textContent = titleCase(viewName);
   if (viewName === 'overview') renderOverview();
   if (viewName === 'collection') renderCollection();
@@ -228,7 +229,7 @@ $('#printLabelsButton').addEventListener('click', () => { window.print(); });
 $('.dismiss-alert').addEventListener('click', () => $('#alertStrip').remove());
 $('#notificationButton').addEventListener('click', () => showToast(`${dueTomorrow().length} ${dueTomorrow().length === 1 ? 'book is' : 'books are'} due tomorrow.`));
 $('#searchToggle').addEventListener('click', () => { navigate('collection'); $('#collectionSearch').focus(); });
-$('.mobile-menu').addEventListener('click', () => $('.sidebar').classList.toggle('open'));
+$('.mobile-menu').addEventListener('click', () => { const sidebar = $('.sidebar'); const isOpen = sidebar.classList.toggle('open'); sidebar.style.setProperty('transform', isOpen ? 'translateX(0)' : 'translateX(-100%)', 'important'); });
 document.addEventListener('click', event => { const lookup = event.target.closest('[data-lookup]'); if (lookup) { navigate('circulation'); $('#lookupInput').value = lookup.dataset.lookup; showLookup(lookup.dataset.lookup); } const returnButton = event.target.closest('[data-return]'); if (returnButton) returnBook(returnButton.dataset.return); const lendButton = event.target.closest('[data-lend]'); if (lendButton) lendBook(lendButton.dataset.lend); const printButton = event.target.closest('[data-print]'); if (printButton) { navigate('labels'); showToast('Print dialog opened for this label.'); window.print(); } });
 
 $('#loginForm').addEventListener('submit', event => { event.preventDefault(); const data = new FormData(event.target); if (accounts[data.get('username')] === data.get('password')) { sessionStorage.setItem('oakwell-user', data.get('username')); $('#loginScreen').classList.add('hidden'); $('#appUserName').textContent = data.get('username'); $('#greetingName').textContent = data.get('username'); } else $('#loginError').classList.add('visible'); });

@@ -1,0 +1,15 @@
+@media (max-width: 720px) {
+  .sidebar.open {
+    transform: translateX(0) !important;
+  }
+
+  .main-content {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .content-wrap,
+  .topbar {
+    min-width: 0;
+  }
+}
