@@ -122,12 +122,6 @@ async function startScanner() {
     $('#scannerStatus').classList.add('error');
     return;
   }
-  if (!('BarcodeDetector' in window)) {
-    $('#scannerLoading').textContent = 'QR detection is not supported in this browser.';
-    $('#scannerStatus').textContent = 'Try the latest Chrome or Edge, or enter a Book ID instead.';
-    $('#scannerStatus').classList.add('error');
-    return;
-  }
   try {
     scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false });
     const video = $('#scannerVideo');
@@ -135,12 +129,24 @@ async function startScanner() {
     await video.play();
     $('#scannerLoading').classList.add('hidden');
     scannerActive = true;
-    const detector = new BarcodeDetector({ formats: ['qr_code'] });
+    const detector = 'BarcodeDetector' in window ? new BarcodeDetector({ formats: ['qr_code'] }) : null;
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!detector && !window.jsQR) throw new Error('QR fallback is unavailable.');
+    if (!detector) $('#scannerStatus').textContent = 'Point the camera at a QR label.';
     const scanFrame = async () => {
       if (!scannerActive) return;
       try {
-        const codes = await detector.detect(video);
-        if (codes[0]?.rawValue && handleScanValue(codes[0].rawValue)) return;
+        if (detector) {
+          const codes = await detector.detect(video);
+          if (codes[0]?.rawValue && handleScanValue(codes[0].rawValue)) return;
+        } else if (video.videoWidth && video.videoHeight) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const code = window.jsQR(canvas.width, canvas.height, context.getImageData(0, 0, canvas.width, canvas.height).data);
+          if (code?.data && handleScanValue(code.data)) return;
+        }
       } catch (error) {
         $('#scannerStatus').textContent = 'Keep the QR label steady inside the frame.';
       }
